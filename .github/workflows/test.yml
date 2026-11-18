@@ -74,6 +74,13 @@ jobs:
           init-shell: bash
           cache-environment: true
           cache-environment-key: pymc-extras-test-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('conda-envs/environment-test.yml') }}-${{ env.CACHE_NUMBER }}
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Install pymc-extras
         run: |
           pip install -e ".[dev]" --no-deps
@@ -132,6 +139,13 @@ jobs:
           init-shell: cmd.exe
           cache-environment: true
           cache-environment-key: pymc-extras-test-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('conda-envs/environment-test.yml') }}-${{ env.CACHE_NUMBER }}
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Install pymc-extras
         run: |
           pip install -e ".[dev]" --no-deps
